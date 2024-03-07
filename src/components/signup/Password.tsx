@@ -47,9 +47,7 @@ const ConfirmBtn = styled.button`
     height: 52px;
     margin-top: 154px;
     border-radius: 12px;
-    font-size: 18px;
-    font-family: 'Pretendard';
-    font-weight: 600;
+    font: ${({ theme }) => theme.fonts.TextSm18};
     cursor: pointer;
     color: ${({ theme }) => theme.colors.White};
     background-color: ${({ theme }) => theme.colors.Main500};
