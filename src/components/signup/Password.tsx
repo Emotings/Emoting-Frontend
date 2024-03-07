@@ -1,6 +1,6 @@
 import { useInput } from "@/hooks/useInput";
 import styled from "styled-components";
-import AuthInput from "../authInput";
+import AuthInput from "@components/authInput";
 
 interface PasswordProps {
     onNext: () => void
