@@ -7,15 +7,17 @@ interface PasswordProps {
 }
 
 const Password = ({ onNext }: PasswordProps) => {
-    const { onChange, form } = useInput("")
-    const { onChange: onChangeRePassword, form: rePassword } = useInput("")
+    const { onChange, form } = useInput({
+        password: "",
+        repassword: ""
+    })
     return (
         <PasswordArea>
             <a>Emoting</a>
             <p>소통에 간단함을 더하다</p>
-            <AuthInput label="비밀번호" value={form} onChange={onChange} type="password" />
-            <AuthInput label="비밀번호 확인" value={rePassword} onChange={onChangeRePassword} type="password" />
-            <ConfirmBtn disabled={!form || form !== rePassword} onClick={onNext}>다음</ConfirmBtn>
+            <AuthInput name="password" label="비밀번호" value={form.password} onChange={onChange} type="password" />
+            <AuthInput name="repassword" label="비밀번호 확인" value={form.repassword} onChange={onChange} type="password" />
+            <ConfirmBtn disabled={!form.password || form.password !== form.repassword} onClick={onNext}>다음</ConfirmBtn>
         </PasswordArea>
     )
 }

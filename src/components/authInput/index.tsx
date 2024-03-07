@@ -1,13 +1,11 @@
 import { InputType } from "@/hooks/useInput";
-import { useState } from "react";
+import { InputHTMLAttributes, useState } from "react";
 import styled from "styled-components";
 
-interface AuthInputProps {
+interface AuthInputProps extends InputHTMLAttributes<HTMLInputElement>{
     label: string;
     isAgeText?: boolean;
-    value: string;
-    type?: string;
-    onChange: (e: InputType)=> void;
+    onChange: (e: InputType) => void;
 }
 
 interface AgeLabelProps {
@@ -15,14 +13,14 @@ interface AgeLabelProps {
     isTop: boolean
 }
 
-const AuthInput = ({ label, isAgeText, value, type, onChange }: AuthInputProps) => {
+const AuthInput = ({ label, isAgeText, onChange, value, ...props }: AuthInputProps) => {
     const [isFocused, setIsFocused] = useState<boolean>(false);
 
     return (
         <InputWrapper>
             <AgeLabel isFocused={isFocused} isTop={isFocused || !!value}>{label}</AgeLabel>
             {isAgeText && <p>살</p>}
-            <Input onFocus={() => setIsFocused(true)} onBlur={() => setIsFocused(false)} value={value} onChange={onChange} type={type}/>
+            <Input onFocus={() => setIsFocused(true)} onBlur={() => setIsFocused(false)} value={value} onChange={onChange} {...props}/>
         </InputWrapper>
     )
 }
