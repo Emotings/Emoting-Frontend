@@ -1,19 +1,23 @@
 import styled from "styled-components";
 import AuthInput from "../authInput";
-import { useInput } from "@/hooks/useInput";
+import { InputType, useInput } from "@/hooks/useInput";
+import { FormType } from ".";
 
 interface AgeProps {
     onNext: () => void;
+    form: FormType;
+    onChange: (e: InputType) => void
 }
 
-const Age = ({ onNext }: AgeProps) => {
-    const { onChange, form } = useInput("")
+const Age = ({ onNext, form, onChange }: AgeProps) => {
     return (
         <AgeArea>
             <a>Emoting</a>
             <p>소통에 간단함을 더하다</p>
-            <AuthInput label="나이" isAgeText value={form} onChange={onChange} />
-            <ConfirmBtn disabled={!form} onClick={onNext}>다음</ConfirmBtn>
+            <form>
+                <AuthInput type="number" label="나이" isAgeText value={form.age} name="age" onChange={onChange} />
+                <ConfirmBtn disabled={!form.age} onClick={onNext}>다음</ConfirmBtn>
+            </form>
         </AgeArea>
     );
 };
@@ -31,6 +35,10 @@ const AgeArea = styled.div`
     p {
         font: ${({ theme }) => theme.fonts.TextMd};
         margin-top: 8px;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
     }
 `;
 

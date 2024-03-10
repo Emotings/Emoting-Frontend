@@ -1,23 +1,24 @@
-import { useInput } from "@/hooks/useInput";
+import { InputType } from "@/hooks/useInput";
 import styled from "styled-components";
 import AuthInput from "@components/authInput";
+import { FormType } from ".";
 
 interface PasswordProps {
     onNext: () => void
+    form: FormType
+    onChange: (e: InputType) => void
 }
 
-const Password = ({ onNext }: PasswordProps) => {
-    const { onChange, form } = useInput({
-        password: "",
-        repassword: ""
-    })
+const Password = ({ onNext, form,onChange }: PasswordProps) => {
     return (
         <PasswordArea>
             <a>Emoting</a>
             <p>소통에 간단함을 더하다</p>
-            <AuthInput name="password" label="비밀번호" value={form.password} onChange={onChange} type="password" />
-            <AuthInput name="repassword" label="비밀번호 확인" value={form.repassword} onChange={onChange} type="password" />
-            <ConfirmBtn disabled={!form.password || form.password !== form.repassword} onClick={onNext}>다음</ConfirmBtn>
+            <form>
+                <AuthInput name="password" label="비밀번호" value={form.password} onChange={onChange} type="password" />
+                <AuthInput name="repassword" label="비밀번호 확인" value={form.repassword} onChange={onChange} type="password" />
+                <ConfirmBtn disabled={!form.password || form.password !== form.repassword} onClick={onNext}>다음</ConfirmBtn>
+            </form>
         </PasswordArea>
     )
 }
@@ -35,6 +36,10 @@ const PasswordArea = styled.div`
     p {
         font: ${({ theme }) => theme.fonts.TextMd};
         margin-top: 8px;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
     }
 `
 

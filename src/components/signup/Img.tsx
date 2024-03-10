@@ -1,16 +1,23 @@
 import { Profile, PlusPhoto } from "@/assets";
-import { useInput } from "@/hooks/useInput";
 import styled from "styled-components";
+import { FormType } from ".";
+import { useSignup } from "@/utils/apis/auth";
 
-const Img = () => {
-    const { form: userPhoto, setForm: setUserPhoto } = useInput<File>()
+interface ImgProps {
+    form: FormType;
+    setForm: React.Dispatch<React.SetStateAction<FormType>>
+}
+
+const Img = ({ form, setForm }: ImgProps) => {
+    const { repassword, img, ...signupRequest } = form
+    const { mutate } = useSignup();
     const saveImgFile = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { files } = e.target;
         if (files) {
             if (files.length === 0) {
                 return;
             } else {
-                setUserPhoto(files[0]);
+                setForm((prev) => ({ ...prev, img: files[0] }));
             }
         }
     };
@@ -19,12 +26,12 @@ const Img = () => {
             <a>Emoting</a>
             <p>소통에 간단함을 더하다</p>
             <ImgLabel>
-                <ProfileImg src={!!userPhoto ? URL.createObjectURL(userPhoto) : Profile} />
+                <ProfileImg src={!!form.img ? URL.createObjectURL(form.img) : Profile} />
                 <PlusPhotoImg src={PlusPhoto} />
                 <ImgInput type="file" onChange={saveImgFile} />
             </ImgLabel>
             <NextTimeButton>나중에 하기</NextTimeButton>
-            <ConfirmBtn disabled={!userPhoto}>다음</ConfirmBtn>
+            <ConfirmBtn disabled={!form.img} onClick={() => mutate(signupRequest)}>완료</ConfirmBtn>
         </ImgArea>
     )
 }
