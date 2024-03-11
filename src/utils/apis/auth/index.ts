@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { SignupRequestType } from "./type";
+import { LoginRequestType, LoginResponseType, SignupRequestType } from "./type";
 import { useMutation } from "@tanstack/react-query";
 import { instance } from "../axios";
 import { AxiosError } from "axios";
+import { useCookies } from "react-cookie";
 
 const path = "/auth";
 
@@ -31,6 +32,36 @@ export const useSignup = () => {
             alert("서버에러입니다 백엔드 잘못이요");
         }
       } else alert("네트워크 연결 상태를 확인해 주세요.");
+    },
+  });
+};
+
+export const useLogin = () => {
+  const router = useNavigate();
+  const [, setCookies] = useCookies();
+  return useMutation({
+    mutationFn: async (body: LoginRequestType) =>
+      await instance.post<LoginResponseType>(`${path}/login`, body),
+    onSuccess: (res) => {
+      setCookies("access_token", res.data.accessToken);
+      router("/main");
+    },
+    onError: (err: AxiosError<AxiosError>) => {
+      if (err.response) {
+        switch (err.response.status) {
+          case 401:
+            alert('비밀번호를 다시 확인해주세요.');
+            break;
+          case 404:
+            alert('아이디와 비밀번호를 다시 확인해주세요.');
+            break;
+          case 500:
+            alert('아이디와 비밀번호를 다시 확인해주세요.');
+            break;
+        }
+      } else {
+        alert('아이디와 비밀번호를 다시 확인해주세요.');
+      }
     },
   });
 };
