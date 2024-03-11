@@ -2,7 +2,7 @@ import { InputType } from "@/hooks/useInput";
 import { InputHTMLAttributes, useState } from "react";
 import styled from "styled-components";
 
-interface AuthInputProps extends InputHTMLAttributes<HTMLInputElement>{
+interface AuthInputProps extends InputHTMLAttributes<HTMLInputElement> {
     label: string;
     isAgeText?: boolean;
     onChange: (e: InputType) => void;
@@ -20,7 +20,7 @@ const AuthInput = ({ label, isAgeText, onChange, value, ...props }: AuthInputPro
         <InputWrapper>
             <AgeLabel isFocused={isFocused} isTop={isFocused || !!value}>{label}</AgeLabel>
             {isAgeText && <p>살</p>}
-            <Input onFocus={() => setIsFocused(true)} onBlur={() => setIsFocused(false)} value={value} onChange={onChange} {...props}/>
+            <Input onFocus={() => setIsFocused(true)} onBlur={() => setIsFocused(false)} value={value} onChange={onChange} {...props} />
         </InputWrapper>
     )
 }
@@ -42,6 +42,7 @@ const Input = styled.input`
     margin-top: 60px;
     padding-bottom: 8px;
     border-bottom: 2px solid gray;
+    background-color: transparent;
     &::placeholder {
         float: right;
         font: ${({ theme }) => theme.fonts.TextMd};
@@ -51,6 +52,11 @@ const Input = styled.input`
         border-bottom: 2px solid ${({ theme }) => theme.colors.Main500};
     }
     font: ${({ theme }) => theme.fonts.TextMd};
+    &::-webkit-inner-spin-button {
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+    }
 `;
 
 const AgeLabel = styled.label<AgeLabelProps>`

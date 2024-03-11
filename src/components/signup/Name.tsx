@@ -1,19 +1,23 @@
-import { useInput } from "@/hooks/useInput";
+import { InputType } from "@/hooks/useInput";
 import styled from "styled-components";
 import AuthInput from "../authInput";
+import { FormType } from ".";
 
 interface NameProps {
     onNext: () => void;
+    form: FormType;
+    onChange: (e: InputType) => void
 }
 
-const Name = ({ onNext }: NameProps) => {
-    const { onChange, form } = useInput("")
+const Name = ({ onNext, form, onChange }: NameProps) => {
     return (
         <NameArea>
             <a>Emoting</a>
             <p>소통에 간단함을 더하다</p>
-            <AuthInput label="닉네임(별명)" value={form} onChange={onChange} />
-            <ConfirmBtn disabled={!form} onClick={onNext} >다음</ConfirmBtn>
+            <form>
+                <AuthInput label="닉네임(별명)" value={form.nickname} name="nickname" onChange={onChange} />
+                <ConfirmBtn disabled={!form.nickname} onClick={onNext} >다음</ConfirmBtn>
+            </form>
         </NameArea>
     )
 }
@@ -31,6 +35,10 @@ const NameArea = styled.div`
     p {
         font: ${({ theme }) => theme.fonts.TextMd};
         margin-top: 8px;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
     }
 `
 

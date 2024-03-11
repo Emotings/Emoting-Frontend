@@ -3,17 +3,28 @@ import styled from "styled-components"
 import { Link } from 'react-router-dom';
 import { useInput } from '@/hooks/useInput';
 import AuthInput from '../authInput';
+import { useLogin } from "@/utils/apis/auth";
+
+interface LoginFormType {
+    email: string;
+    password: string;
+}
 
 const Login = () => {
-    const { onChange: onChangeId, form: id } = useInput("")
-    const { onChange: onChangePassword, form: password } = useInput("")
+    const { form, onChange } = useInput<LoginFormType>({
+        email: "",
+        password: ""
+    })
+    const {email, password} = form
+    const { mutate } = useLogin()
     return (
         <LoginArea>
             <a>Emoting</a>
             <p>소통에 간단함을 더하다</p>
-            <AuthInput label="아이디" value={id} onChange={onChangeId} />
-            <AuthInput label="비밀번호" value={password} onChange={onChangePassword} type="password" />
-            <ConfirmBtn disabled={!id || !password}>로그인</ConfirmBtn>
+            <AuthInput label="이메일" value={email} onChange={onChange} name="email" />
+            <AuthInput label="비밀번호" value={password} onChange={onChange} name="password" type="password" />
+            <ConfirmBtn disabled={!email || !password}
+                onClick={() => mutate(form)}>로그인</ConfirmBtn>
             <Link to="/signup"><SignupBtn>회원가입하기</SignupBtn></Link>
             <OauthArea>
                 <img src={KakaoTalk} />
