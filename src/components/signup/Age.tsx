@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import AuthInput from "../authInput";
-import { InputType, useInput } from "@/hooks/useInput";
+import { InputType } from "@/hooks/useInput";
 import { FormType } from ".";
 
 interface AgeProps {
@@ -16,7 +16,7 @@ const Age = ({ onNext, form, onChange }: AgeProps) => {
             <p>소통에 간단함을 더하다</p>
             <form>
                 <AuthInput type="number" label="나이" isAgeText value={form.age} name="age" onChange={onChange} />
-                <ConfirmBtn disabled={!form.age} onClick={onNext}>다음</ConfirmBtn>
+                <ConfirmBtn disabled={!form.age} onSubmit={onNext}>다음</ConfirmBtn>
             </form>
         </AgeArea>
     );
