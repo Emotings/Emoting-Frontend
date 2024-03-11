@@ -15,14 +15,15 @@ const Login = () => {
         email: "",
         password: ""
     })
+    const {email, password} = form
     const { mutate } = useLogin()
     return (
         <LoginArea>
             <a>Emoting</a>
             <p>소통에 간단함을 더하다</p>
-            <AuthInput label="이메일" value={form.email} onChange={onChange} name="email" />
-            <AuthInput label="비밀번호" value={form.password} onChange={onChange} name="password" type="password" />
-            <ConfirmBtn disabled={!form.email || !form.password}
+            <AuthInput label="이메일" value={email} onChange={onChange} name="email" />
+            <AuthInput label="비밀번호" value={password} onChange={onChange} name="password" type="password" />
+            <ConfirmBtn disabled={!email || !password}
                 onClick={() => mutate(form)}>로그인</ConfirmBtn>
             <Link to="/signup"><SignupBtn>회원가입하기</SignupBtn></Link>
             <OauthArea>
